@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const cors = require("./middlewares/cors");
-const { usersRouter, gamesRouter, categoriesRouter } = require("./routes");
+const apiRouter = require("./routes/apiRouter");
 
 const connectToDatabase = require("./database/connect");
 
@@ -16,11 +16,8 @@ app.use(
   cors,
   bodyParser.json(),
   express.static(path.join(__dirname, "public")),
-  usersRouter,
-  gamesRouter,
-  categoriesRouter
+  apiRouter
 );
-
 app.listen(PORT, () => {
   console.log(`Server is running "http://localhost:${PORT}"`);
 });

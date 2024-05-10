@@ -9,6 +9,8 @@ const {
   checkEmptyNameAndEmailAndPassword,
   checkEmptyNameAndEmail,
   checkIsUserExists,
+  filterPassword,
+  hashPassword,
 } = require("../middlewares/users");
 const {
   sendAllUsers,
@@ -18,14 +20,15 @@ const {
   sendUserDeleted,
 } = require("../controllers/users");
 
-usersRouter.get("/users", findAllUsers, sendAllUsers);
-usersRouter.get("/users/:id", findUserById, sendUserById);
+usersRouter.get("/users", findAllUsers, filterPassword, sendAllUsers);
+usersRouter.get("/users/:id", findUserById, filterPassword, sendUserById);
 
 usersRouter.post(
   "/users",
   findAllUsers,
   checkIsUserExists,
   checkEmptyNameAndEmailAndPassword,
+  hashPassword,
   createUser,
   sendUserCreated
 );
