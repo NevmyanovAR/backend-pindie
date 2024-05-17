@@ -3,8 +3,10 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const cors = require("./middlewares/cors");
 const apiRouter = require("./routes/apiRouter");
+const cookieParser = require("cookie-parser");
 
 const connectToDatabase = require("./database/connect");
+const pagesRouter = require("./routes/pages");
 
 const PORT = 3000;
 
@@ -14,9 +16,11 @@ connectToDatabase();
 
 app.use(
   cors,
+  cookieParser(),
   bodyParser.json(),
-  express.static(path.join(__dirname, "public")),
-  apiRouter
+  pagesRouter,
+  apiRouter,
+  express.static(path.join(__dirname, "public"))
 );
 app.listen(PORT, () => {
   console.log(`Server is running "http://localhost:${PORT}"`);
